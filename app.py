@@ -9,7 +9,7 @@ st.set_page_config(page_title="Music & Mental Health", layout="wide")
 st.title("Music & Mental Health Survey Analysis (Interactive Dashboard)")
 
 #load dataset
-file_path = "https://raw.githubusercontent.com/mohidqadeer123/streamlit-tests/refs/heads/main/Dataset.csv"
+file_path = r"https://raw.githubusercontent.com/mohidqadeer123/streamlit-tests/refs/heads/main/Dataset.csv"
 df = pd.read_csv(file_path)
 
 #identify key columns
