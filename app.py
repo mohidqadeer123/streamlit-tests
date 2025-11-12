@@ -172,23 +172,21 @@ if not filtered_df.empty:
         genre_means["avg_score"] = genre_means[health_cols].mean(axis=1)
         genre_means = genre_means.sort_values("avg_score")
         
-    # Bar Plot
-    st.subheader("🎚 Relationship of Average mental health with Favourite Genre and Listening style")
-    st.markdown("### 📊 : Which music genre seems to be the best to fight depression?")
-    fig5 = px.bar(genre_means, 
+        # Bar Plot
+        st.subheader("🎚 Relationship of Average mental health with Favourite Genre and Listening style")
+        st.markdown("### 📊 : Which music genre seems to be the best to fight depression?")
+        fig5 = px.bar(genre_means, 
                   x="Fav genre", 
                   y=health_cols, 
                   barmode="group",
                 title="Average Mental Health Scores vs Fav Genre",
                 labels={"value": "Average Mental Score", "Fav genre": "Music Genre"},
                 color_discrete_sequence=px.colors.qualitative.Vivid
-    )
-    fig5.update_layout(xaxis_tickangle=-45)
-    st.plotly_chart(fig5, use_container_width=True)
+        )
+        fig5.update_layout(xaxis_tickangle=-45)
+        st.plotly_chart(fig5, use_container_width=True)
     else:
         print("⚠️ No genre data available after filtering.")
-else:
-    print("⚠️ 'listening_type' not found in filtered dataset.")
 
 
 # Average Mental Health vs Listening Type
@@ -200,15 +198,15 @@ if "listening_type" in filtered_df.columns:
                 value_vars=health_cols,
                 var_name="Condition", value_name="Score"
         )
-    # Whisker Plot
-    st.markdown("### 📊 : Do people who spend more time listening to a single favorite genre report different mental health outcomes compared to those who spread their time across multiple genres? ")
-    fig6 = px.box(mh_melted,
+        # Whisker Plot
+        st.markdown("### 📊 : Do people who spend more time listening to a single favorite genre report different mental health outcomes compared to those who spread their time across multiple genres? ")
+        fig6 = px.box(mh_melted,
                 x="listening_type", 
                 y="Score", color="Condition",
                 title="Mental Health Outcomes: Single vs Multi-Genre Listeners",
                 labels={"listening_type": "Listening Style"}
-    )
-    st.plotly_chart(fig6, use_container_width=True)
+        )
+        st.plotly_chart(fig6, use_container_width=True)
     else:
         print("⚠️ No data for listening type comparison after filtering.")
 else:
