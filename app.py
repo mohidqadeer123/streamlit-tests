@@ -224,7 +224,7 @@ else:
     print("⚠️ 'listening_type' not found in filtered dataset.")
 
 
-#slider
+# Average mental health scores vs age group
 if not filtered_df.empty:
     age_group_summary = filtered_df.groupby('Age_Group')[health_cols].mean()
     age_group_summary['Avg_Hours'] = filtered_df.groupby('Age_Group')["Hours per day"].mean()
@@ -234,8 +234,9 @@ if not filtered_df.empty:
     st.markdown("### 🌈 : How do daily music listening habits influence average mental health scores across different age groups?")
     fig7, ax = plt.subplots(figsize=(10, 3))
     sns.heatmap(age_group_summary, annot=True, cmap="coolwarm", ax=ax)
-    ax.set_title("Average Mental Health Scores by Age Group (Filtered by Hours per Day)")
-    ax.set_ylabel("Age Group")
+    ax.set_title("Average Mental Health Scores by Age Group (Filtered by Hours per Day)", fontsize=12, color="dimgray", pad=10)
+    ax.set_ylabel("Age Group" , fontsize=10, color="gray", labelpad=8)
+    ax.set_xlabel("Mental Health Conditions + Avg Hours", fontsize=10, color="gray", labelpad=8)
     st.pyplot(fig7, use_container_width=True)
     fig8 = go.Figure(
     data=go.Heatmap(
@@ -251,7 +252,7 @@ if not filtered_df.empty:
     )
 
     fig8.update_layout(
-    title="🧠 Average Mental Health Scores by Age Group (Filtered by Hours per Day)",
+    title="Average Mental Health Scores by Age Group (Filtered by Hours per Day)",
     xaxis_title="Mental Health Conditions + Avg Hours",
     yaxis_title="Age Group",
     yaxis=dict(autorange="reversed"),  # keep order like seaborn
