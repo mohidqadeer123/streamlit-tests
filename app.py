@@ -213,7 +213,8 @@ if "listening_type" in filtered_df.columns:
         st.markdown("### 📊 : Do people who spend more time listening to a single favorite genre report different mental health outcomes compared to those who spread their time across multiple genres? ")
         fig6 = px.box(mh_melted,
                 x="listening_type", 
-                y="Average Mental Health Score", color="Condition",
+                y="Score", 
+                color="Condition",
                 title="Mental Health Outcomes: Single vs Multi-Genre Listeners",
                 labels={"listening_type": "Listening Style"}
         )
