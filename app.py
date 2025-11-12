@@ -187,6 +187,8 @@ if not filtered_df.empty:
     st.plotly_chart(fig5, use_container_width=True)
     else:
         print("⚠️ No genre data available after filtering.")
+else:
+    print("⚠️ 'listening_type' not found in filtered dataset.")
 
 
 # Average Mental Health vs Listening Type
