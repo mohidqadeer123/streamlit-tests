@@ -236,6 +236,29 @@ if not filtered_df.empty:
     ax.set_title("Average Mental Health Scores by Age Group (Filtered by Hours per Day)")
     ax.set_ylabel("Age Group")
     st.pyplot(fig7, use_container_width=True)
+    fig7 = go.Figure(
+    data=go.Heatmap(
+        z=age_group_summary.values,
+        x=age_group_summary.columns,
+        y=age_group_summary.index,
+        colorscale="RdBu",  # similar to 'coolwarm'
+        reversescale=True,
+        text=np.round(age_group_summary.values, 2),
+        texttemplate="%{text}",
+        textfont={"size": 12},
+        hovertemplate="Age Group: %{y}<br>%{x}: %{z:.2f}<extra></extra>")
+    )
+
+    fig7.update_layout(
+    title="🧠 Average Mental Health Scores by Age Group (Filtered by Hours per Day)",
+    xaxis_title="Mental Health Conditions + Avg Hours",
+    yaxis_title="Age Group",
+    yaxis=dict(autorange="reversed"),  # keep order like seaborn
+    height=400,
+    margin=dict(l=60, r=20, t=60, b=40)
+    )
+
+    st.plotly_chart(fig7, use_container_width=True)
 else:
     st.warning("⚠️ No data available for the selected hours range.")
 
