@@ -148,7 +148,7 @@ else:
 
 # Average Mental Health by Fav Genre
 if not filtered_df.empty:
-    genre_subset = filtered_df[["Fav genre"] + Health_cols].dropna()
+    genre_subset = filtered_df[["Fav genre"] + health_cols].dropna()
     if not genre_subset.empty:
         genre_means = genre_subset.groupby("Fav genre")[health_cols].mean().reset_index()
         genre_means["avg_score"] = genre_means[health_cols].mean(axis=1)
