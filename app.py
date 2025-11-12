@@ -211,6 +211,31 @@ if "listening_type" in filtered_df.columns:
         print("⚠️ No data for listening type comparison after filtering.")
 else:
     print("⚠️ 'listening_type' not found in filtered dataset.")
+
+# Age groups
+df['Age_Group'] = pd.cut(
+    df['Age'],
+    bins=[0, 25, 40, 60, 100],
+    labels=['18-25', '26-40', '41-60', '60+'],
+    include_lowest=True
+)
+
+mh_cols = ['Anxiety', 'Depression', 'Insomnia', 'OCD']
+
+#slider
+hours_range = st.slider("🎧 Select Hours of Music Listening per Day", 0.0, 10.0, (0.0, 10.0))
+filtered_df1 = df[(df["Hours per day"] >= hours_range[0]) & (df["Hours per day"] <= hours_range[1])]
+age_group_summary = filtered_df1.groupby('Age_Group')[mh_cols].mean()
+age_group_summary['Avg_Hours'] = filtered_df1.groupby('Age_Group')["Hours per day"].mean()
+
+# Heatmap
+st.subheader("🧠 Average Mental Health Scores by Age Group and Listening Hours")
+fig, ax = plt.subplots(figsize=(9, 6))
+sns.heatmap(age_group_summary, annot=True, cmap="coolwarm", ax=ax)
+ax.set_title("Average Mental Health Scores by Age Group (Filtered by Hours per Day)")
+ax.set_ylabel("Age Group")
+st.pyplot(fig)
+
     
         
 
