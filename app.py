@@ -17,13 +17,31 @@ health_cols = [c for c in df.columns if any(x in c for x in ["Anxiety", "Depress
 genre_cols = [c for c in df.columns if c.startswith("Frequency [")]
 bpm_col = "BPM" if "BPM" in df.columns else None  # adjust if your BPM column name differs
 
+# Frequency map for listening type
+freq_map = {
+    "Never": 0,
+    "Rarely": 1,
+    "Sometimes": 2,
+    "Very frequently": 3
+}
+
+genre_freq_cols = [col for col in df.columns if col.startswith("Frequency")]
+df[genre_freq_cols] = df[genre_freq_cols].replace(freq_map)
+df["active_genre_count"] = (df[genre_freq_cols] >= 2).sum(axis=1)
+df["listening_type"] = df["active_genre_count"].apply(lambda x: "Single" if x == 1 else "Multiple")
+
 #clean and prepare data
 df_clean = df.dropna(subset=health_cols + ["Hours per day", "Exploratory", "Music effects"])
 df_clean[genre_cols] = df_clean[genre_cols].apply(pd.to_numeric, errors="coerce")
 df_clean[health_cols] = df_clean[health_cols].apply(pd.to_numeric, errors="coerce")
 
+# add 'listening type' to df_clean
+if "listening_type" in df.columns:
+    df_clean["listening_type"] = df.loc[df_clean.index, "listening_type"]
+
 df_clean["Variety"] = (df_clean[genre_cols] > 0).sum(axis=1)
 df_clean["Avg_health"] = df_clean[health_cols].mean(axis=1)
+
 
 #sidebar filters
 st.sidebar.header("🧭 Filter Data")
@@ -161,13 +179,36 @@ if not filtered_df.empty:
                   x="Fav genre", 
                   y=health_cols, 
                   barmode="group",
-                title="🎶 Average Mental Health Scores vs Fav Genre",
+                title="Average Mental Health Scores vs Fav Genre",
                 labels={"value": "Average Mental Score", "Fav genre": "Music Genre"},
                 color_discrete_sequence=px.colors.qualitative.Vivid
     )
     fig5.update_layout(xaxis_tickangle=-45)
     st.plotly_chart(fig5, use_container_width=True)
-else:
-    print("⚠️ No genre data available after filtering.")
+    else:
+        print("⚠️ No genre data available after filtering.")
+
+
+# Average Mental Health vs Listening Type
+if "listening_type" in filtered_df.columns:
+    subset = filtered_df[["listening_type"] + health_cols].dropna()
+    if not subset.empty:
+        mh_melted = subset.melt(
+                id_vars="listening_type",
+                value_vars=health_cols,
+                var_name="Condition", value_name="Score"
+        )
+    # Whisker Plot
+    st.markdown("### 📊 : Do people who spend more time listening to a single favorite genre report different mental health outcomes compared to those who spread their time across multiple genres? ")
+    fig6 = px.box(mh_melted,
+                x="listening_type", 
+                y="Score", color="Condition",
+                title="Mental Health Outcomes: Single vs Multi-Genre Listeners",
+                labels={"listening_type": "Listening Style"}
+    )
+    st.plotly_chart(fig6, use_container_width=True)
+        
+
+
 
 
