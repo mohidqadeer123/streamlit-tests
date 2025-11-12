@@ -229,7 +229,8 @@ if not filtered_df.empty:
     age_group_summary['Avg_Hours'] = filtered_df.groupby('Age_Group')["Hours per day"].mean()
 
     # Heatmap
-    st.subheader("🧠 Average Mental Health Scores by Age Group and Listening Hours")
+    st.subheader("🎚 Relationship of Average mental health with Age Group and Listening hours")
+    st.markdown("### 🌈 : How do daily music listening habits influence average mental health scores across different age groups?")
     fig, ax = plt.subplots(figsize=(9, 6))
     sns.heatmap(age_group_summary, annot=True, cmap="coolwarm", ax=ax)
     ax.set_title("Average Mental Health Scores by Age Group (Filtered by Hours per Day)")
