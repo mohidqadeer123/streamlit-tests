@@ -237,13 +237,18 @@ if not filtered_df.empty:
     ax.set_title("Average Mental Health Scores by Age Group (Filtered by Hours per Day)", fontsize=12, color="dimgray", pad=10)
     ax.set_ylabel("Age Group" , fontsize=10, color="gray", labelpad=8)
     ax.set_xlabel("Mental Health Conditions + Avg Hours", fontsize=10, color="gray", labelpad=8)
+
+    ax.tick_params(axis="x", colors="gray", labelsize=9)
+    ax.tick_params(axis="y", colors="gray", labelsize=9)
+    
     st.pyplot(fig7, use_container_width=True)
+    
     fig8 = go.Figure(
     data=go.Heatmap(
         z=age_group_summary.values,
         x=age_group_summary.columns,
         y=age_group_summary.index,
-        colorscale="RdBu",  # similar to 'coolwarm'
+        colorscale="RdBu", 
         reversescale=True,
         text=np.round(age_group_summary.values, 2),
         texttemplate="%{text}",
