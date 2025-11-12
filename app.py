@@ -40,6 +40,14 @@ df_clean[health_cols] = df_clean[health_cols].apply(pd.to_numeric, errors="coerc
 if "listening_type" in df.columns:
     df_clean["listening_type"] = df.loc[df_clean.index, "listening_type"]
 
+# Age groups
+df_clean['Age_Group'] = pd.cut(
+    df_clean['Age'],
+    bins=[0, 25, 40, 60, 100],
+    labels=['18-25', '26-40', '41-60', '60+'],
+    include_lowest=True
+)
+
 df_clean["Variety"] = (df_clean[genre_cols] > 0).sum(axis=1)
 df_clean["Avg_health"] = df_clean[health_cols].mean(axis=1)
 
@@ -213,24 +221,10 @@ if "listening_type" in filtered_df.columns:
 else:
     print("⚠️ 'listening_type' not found in filtered dataset.")
 
-# Age groups
-df['Age_Group'] = pd.cut(
-    df['Age'],
-    bins=[0, 25, 40, 60, 100],
-    labels=['18-25', '26-40', '41-60', '60+'],
-    include_lowest=True
-)
-
-mh_cols = ['Anxiety', 'Depression', 'Insomnia', 'OCD']
 
 #slider
-hours_range = st.slider("🎧 Select Hours of Music Listening per Day", 0.0, 10.0, (0.0, 10.0))
-filtered_df = df[(df["Hours per day"] >= hours_range[0]) & (df["Hours per day"] <= hours_range[1])]
-filtered_df = df_clean[
-    df_clean["Hours per day"].between(hours_range[0], hours_range[1])
-].copy()
 if not filtered_df.empty:
-    age_group_summary = filtered_df.groupby('Age_Group')[mh_cols].mean()
+    age_group_summary = filtered_df.groupby('Age_Group')[health_cols].mean()
     age_group_summary['Avg_Hours'] = filtered_df.groupby('Age_Group')["Hours per day"].mean()
 
     # Heatmap
