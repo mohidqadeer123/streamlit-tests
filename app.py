@@ -231,7 +231,7 @@ if not filtered_df.empty:
     # Heatmap
     st.subheader("🎚 Relationship of Average mental health with Age Group and Listening hours")
     st.markdown("### 🌈 : How do daily music listening habits influence average mental health scores across different age groups?")
-    fig7, ax = plt.subplots(figsize=(9, 6))
+    fig7, ax = plt.subplots(figsize=(6, 3))
     sns.heatmap(age_group_summary, annot=True, cmap="coolwarm", ax=ax)
     ax.set_title("Average Mental Health Scores by Age Group (Filtered by Hours per Day)")
     ax.set_ylabel("Age Group")
