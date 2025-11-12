@@ -235,7 +235,7 @@ if not filtered_df.empty:
     sns.heatmap(age_group_summary, annot=True, cmap="coolwarm", ax=ax)
     ax.set_title("Average Mental Health Scores by Age Group (Filtered by Hours per Day)")
     ax.set_ylabel("Age Group")
-    st.plotly_chart(fig7, use_container_width=True)
+    st.pyplot(fig7, use_container_width=True)
 else:
     st.warning("⚠️ No data available for the selected hours range.")
 
