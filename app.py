@@ -166,7 +166,7 @@ if not filtered_df.empty:
                 color_discrete_sequence=px.colors.qualitative.Vivid
     )
     fig5.update_layout(xaxis_tickangle=-45)
-    fig5.show()
+    st.plotly_chart(fig5, use_container_width=True)
 else:
     print("⚠️ No genre data available after filtering.")
 
