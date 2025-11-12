@@ -225,9 +225,9 @@ mh_cols = ['Anxiety', 'Depression', 'Insomnia', 'OCD']
 
 #slider
 hours_range = st.slider("🎧 Select Hours of Music Listening per Day", 0.0, 10.0, (0.0, 10.0))
-filtered_df1 = df[(df["Hours per day"] >= hours_range[0]) & (df["Hours per day"] <= hours_range[1])]
-age_group_summary = filtered_df1.groupby('Age_Group')[mh_cols].mean()
-age_group_summary['Avg_Hours'] = filtered_df1.groupby('Age_Group')["Hours per day"].mean()
+filtered_df = df[(df["Hours per day"] >= hours_range[0]) & (df["Hours per day"] <= hours_range[1])]
+age_group_summary = filtered_df.groupby('Age_Group')[mh_cols].mean()
+age_group_summary['Avg_Hours'] = filtered_df.groupby('Age_Group')["Hours per day"].mean()
 
 # Heatmap
 st.subheader("🧠 Average Mental Health Scores by Age Group and Listening Hours")
