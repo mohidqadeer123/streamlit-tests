@@ -191,7 +191,7 @@ if not filtered_df.empty:
                   y=health_cols, 
                   barmode="group",
                 title="Average Mental Health Scores vs Fav Genre",
-                labels={"value": "Average Mental Score", "Fav genre": "Music Genre"},
+                labels={"value": "Average Mental Health Score", "Fav genre": "Music Genre"},
                 color_discrete_sequence=px.colors.qualitative.Vivid
         )
         fig5.update_layout(xaxis_tickangle=-45)
@@ -213,7 +213,7 @@ if "listening_type" in filtered_df.columns:
         st.markdown("### 📊 : Do people who spend more time listening to a single favorite genre report different mental health outcomes compared to those who spread their time across multiple genres? ")
         fig6 = px.box(mh_melted,
                 x="listening_type", 
-                y="Score", color="Condition",
+                y="Average Mental Health Score", color="Condition",
                 title="Mental Health Outcomes: Single vs Multi-Genre Listeners",
                 labels={"listening_type": "Listening Style"}
         )
