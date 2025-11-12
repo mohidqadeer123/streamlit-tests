@@ -207,6 +207,11 @@ if "listening_type" in filtered_df.columns:
                 labels={"listening_type": "Listening Style"}
     )
     st.plotly_chart(fig6, use_container_width=True)
+    else:
+        print("⚠️ No data for listening type comparison after filtering.")
+else:
+    print("⚠️ 'listening_type' not found in filtered dataset.")
+    
         
 
 
