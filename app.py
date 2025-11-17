@@ -220,9 +220,9 @@ if "listening_type" in filtered_df.columns:
         )
         st.plotly_chart(fig6, use_container_width=True)
     else:
-        print("⚠️ No data for listening type comparison after filtering.")
+        st.warning("⚠️ No data for listening type comparison after filtering.")
 else:
-    print("⚠️ 'listening_type' not found in filtered dataset.")
+    st.warning("⚠️ 'listening_type' not found in filtered dataset.")
 
 
 # Average mental health scores vs age group
